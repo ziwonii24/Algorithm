@@ -15,7 +15,6 @@ int check() {
 			vsum += board[i][j];
 			hsum += board[j][i];
 		}
-
 		if (vsum != 45) return 0;
 		if (hsum != 45) return 0;
 	}
