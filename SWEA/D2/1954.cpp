@@ -14,14 +14,30 @@ int n;
 int arr[MAX][MAX];
 
 void sol() {
-  //마저 진행하기!!!
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= n; j++)
+			arr[i][j] = 0;
 
+	for (int i = 0; i <= n + 1; i++) {
+		arr[0][i] = -1;
+		arr[i][0] = -1;
+		arr[n + 1][i] = -1;
+		arr[i][n + 1] = -1;
+	}
 
+	int r = 1, c = 0, d = 2;
+	for (int i = 1; i <= n * n; i++) {
+		if (d == 0 && arr[r + 1][c] != 0) d = 1;
+		if (d == 1 && arr[r][c - 1] != 0) d = 3;
+		if (d == 2 && arr[r][c + 1] != 0) d = 0;
+		if (d == 3 && arr[r - 1][c] != 0) d = 2;
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++)
-			cout << arr[i][j] << ' ';
-		cout << '\n';
+		if (d == 0) r++;
+		else if (d == 1) c--;
+		else if (d == 2) c++;
+		else if (d == 3) r--;
+
+		arr[r][c] = i;
 	}
 }
 
@@ -33,7 +49,11 @@ int main() {
 		cin >> n;
 		cout << '#' << T << '\n';
 		sol();
-		cout << '\n';
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++)
+				cout << arr[i][j] << ' ';
+			cout << '\n';
+		}
 	}
 	return 0;
 }
