@@ -12,33 +12,10 @@ char arr[MAX + 2][MAX + 2];
 int vis[MAX + 2][MAX + 2][3];
 int dx[4] = { 0,0,1,-1 };
 int dy[4] = { 1,-1,0,0 };
-deque<pair<int, int>> dq;
+deque<pair<int, int>> dq1;
 
-void print_arr() {
-	cout << '\n';
-	for (int i = 0; i <= n + 1; i++) {
-		for (int j = 0; j <= m + 1; j++)
-			cout << arr[i][j] << ' ';	
-		cout << '\n';
-	}
-	cout << '\n';
-}
-
-void print_vis() {
-	cout << '\n';
-	for (int k = 0; k < 3; k++) {
-		for (int i = 0; i <= n + 1; i++) {
-			for (int j = 0; j <= m + 1; j++) {
-				if (vis[i][j][k] == -1) cout << "- ";
-				else cout << vis[i][j][k] << ' ';
-			}
-			cout << '\n';
-		}
-		cout << '\n';
-	}
-}
-
-void init_arr() {
+void init_arr() {	//배열 초기화
+	//arr배열 확장
 	for (int i = 0; i <= n + 1; i++) {
 		arr[i][0] = '.';
 		arr[i][m + 1] = '.';
@@ -47,6 +24,7 @@ void init_arr() {
 		arr[0][j] = '.';
 		arr[n + 1][j] = '.';
 	}
+	//vis배열 초기화
 	for (int k = 0; k < 3; k++)
 		for (int i = 0; i <= n + 1; i++)
 			for (int j = 0; j <= m + 1; j++)
@@ -55,20 +33,20 @@ void init_arr() {
 }
 
 void bfs() {
-	dq.push_back({ 0,0 });	//죄수1, 죄수2, 상근이
+	dq1.push_back({ 0,0 });	//dq1상태 : 죄수1, 죄수2, 상근이
 	for (int k = 0; k < 3; k++) {
-		int sx = dq.back().first;
-		int sy = dq.back().second;
-		dq.pop_back();
+		int sx = dq1.back().first;
+		int sy = dq1.back().second;
+		dq1.pop_back();	//상근이, 죄수2, 죄수1 순으로 pop (k=0,1,2)
 
-		deque<pair<int, int>> q;
-		q.push_back({ sx, sy });
+		deque<pair<int, int>> dq2;
+		dq2.push_back({ sx, sy });
 		vis[sx][sy][k] = 0;
 
-		while (!q.empty()) {
-			int x = q.front().first;
-			int y = q.front().second;
-			q.pop_front();
+		while (!dq2.empty()) {
+			int x = dq2.front().first;
+			int y = dq2.front().second;
+			dq2.pop_front();
 
 			for (int i = 0; i < 4; i++) {
 				int nx = x + dx[i];
@@ -77,11 +55,11 @@ void bfs() {
 				if (nx >= 0 && nx <= n + 1 && ny >= 0 && ny <= m + 1) {
 					if (vis[nx][ny][k] == -1 && arr[nx][ny] == '.') {
 						vis[nx][ny][k] = vis[x][y][k];
-						q.push_front({ nx, ny });
+						dq2.push_front({ nx, ny });
 					}
 					else if (vis[nx][ny][k] == -1 && arr[nx][ny] == '#') {
 						vis[nx][ny][k] = vis[x][y][k] + 1;
-						q.push_back({ nx, ny });
+						dq2.push_back({ nx, ny });
 					}
 				}
 			}
@@ -103,19 +81,19 @@ int main() {
 				arr[i][j] = str[j-1];
 				if (arr[i][j] == '$') {
 					arr[i][j] = '.';
-					dq.push_back({ i, j });
+					dq1.push_back({ i, j });
 				}
 			}
 		}
+
 		bfs();
-		//print_vis();
 
 		int ans = 987654321;
 		for (int i = 0; i <= n + 1; i++) {
 			for (int j = 0; j <= m + 1; j++) {
-				if (arr[i][j] == '*') continue;
+				if (arr[i][j] == '*') continue;	//벽이면넘기기, 더할필요x
 				int sum = vis[i][j][0] + vis[i][j][1] + vis[i][j][2];
-				if (arr[i][j] == '#') sum -= 2;
+				if (arr[i][j] == '#') sum -= 2;	//문이면 세번더했으므로 두번빼줌
 				ans = min(ans, sum);
 			}
 		}
