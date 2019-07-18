@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Solution {
+public class Solution {	// 새로운 불면증 치료법
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int tc = sc.nextInt();
