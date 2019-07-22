@@ -6,6 +6,16 @@ public class Solution {
 		int testcase = sc.nextInt();
 		for(int tc=1; tc<=testcase; tc++) {
 			int n = sc.nextInt();	
+			
+			final int units[] = {50000, 10000, 5000, 1000, 500, 100, 50, 10};
+			System.out.printf("#%d\n", tc);
+			for(int u: units) {
+				System.out.print(n/u + " ");
+				n %= u;
+			}
+			System.out.println();
+			
+			/*
 			// 0	  1	 	 2	   3	 4	 5	 6	7
 			// 50,000 10,000 5,000 1,000 500 100 50 10
 			int[] arr = new int[8];
@@ -31,9 +41,7 @@ public class Solution {
 				System.out.printf("%d ", arr[i]);				
 			}
 			System.out.println();
-			
-			
-//			System.out.printf("#%d %d %d\n", tc, );			
+			*/
 		} // end of for(testcase)
 	} // end of main
 } // end of class
