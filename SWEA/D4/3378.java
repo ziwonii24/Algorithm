@@ -11,7 +11,6 @@ public class Solution {
 	StringBuilder sb = new StringBuilder();
 	int n, m;
 	String[] master, me;	
-	List<Integer> stack = new ArrayList<>();
 	int[] ans;
 		
 	void stylish(int R, int C, int S) {
@@ -65,19 +64,6 @@ public class Solution {
 		}
 	}
 	
-	void dfs() {
-		if(stack.size()==3) {
-			stylish(stack.get(0), stack.get(1), stack.get(2));
-			return;
-		}
-		
-		for(int i=1; i<=20; i++) {
-			stack.add(i);
-			dfs();
-			stack.remove(stack.size()-1);
-		}
-	}
-	
 	void solve() throws IOException {
 		int testcase = Integer.parseInt(br.readLine());
 		for(int tc=1; tc<=testcase; tc++) {
@@ -95,7 +81,14 @@ public class Solution {
 				me[i] = br.readLine();
 			}
 			
-			dfs();	
+			for(int R=1; R<=20; R++) {
+				for(int C=1; C<=20; C++) {
+					for(int S=1; S<=20; S++) {
+						stylish(R, C, S);
+					}
+				}
+			}
+			
 			sb.append('#').append(tc).append(' ');
 			for(int i=0; i<m; i++) {
 				sb.append(ans[i]).append(' ');
