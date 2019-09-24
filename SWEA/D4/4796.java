@@ -34,6 +34,7 @@ public class Solution {
 						k = next;
 						flag = false;
 					} else if(s!=0 && k<next) {
+						// 이 경우에만 다시 비교를 시작하기 위해 while문으로 만든것
 //						System.out.println("작았다가 커졌을때 : l*s="+(l*s));
 						ans += l*s;
 						l = 0;
