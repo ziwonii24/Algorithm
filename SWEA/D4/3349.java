@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+/**bfs인줄 알았는데 아니었던 문제*/
 public class Solution {	
 	
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
