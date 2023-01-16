@@ -1,4 +1,4 @@
 function solution(numbers) {
-    const sorted = numbers.sort((a, b) => b - a);
-    return sorted[0] * sorted[1];
+    const sortedArr = numbers.sort((a, b) => b - a);
+    return sortedArr[0] * sortedArr[1];
 }
